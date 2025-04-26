@@ -1,11 +1,29 @@
+using CafeAPI.Application.Interfaces;
+using CafeAPI.Application.Mapping;
+using CafeAPI.Application.Services.Abstract;
+using CafeAPI.Application.Services.Concrete;
+using CafeAPI.Persistance.Context;
+using Microsoft.EntityFrameworkCore;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-//builder.Services.AddDbContext();
-
-
+builder.Services.AddDbContext<AppDbContext>(opt =>
+{
+    var conf = builder.Configuration;
+    var database = conf.GetConnectionString("DefaultConnection");
+    opt.UseSqlServer(database);
+});
 
 builder.Services.AddControllers();
+
+builder.Services.AddScoped(typeof(IGenericRepository<>), typeof(IGenericRepository<>));
+builder.Services.AddScoped<IMenuItemServices, MenuItemServices>();
+builder.Services.AddScoped<ICategoryServices, CategoryServices>();
+
+builder.Services.AddAutoMapper(typeof(GeneralMapping));
+
+
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
