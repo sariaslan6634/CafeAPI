@@ -1,0 +1,29 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using AutoMapper;
+using CafeAPI.Application.Dtos.CategoryDto;
+using CafeAPI.Application.Dtos.MenuItemDto;
+using CafeAPI.Domain.Entities;
+
+namespace CafeAPI.Application.Mapping
+{
+    public class GeneralMapping : Profile
+    {
+        public GeneralMapping()
+        {
+            CreateMap<Category, CreateCategoryDto>().ReverseMap();
+            CreateMap<Category, ResultCategoryDto>().ReverseMap();
+            CreateMap<Category, UpdateCategoryDto>().ReverseMap();
+            CreateMap<Category, DetailCategoryDto>().ReverseMap();
+
+            
+            CreateMap<MenuItem, CreateMenuItemDto>().ReverseMap();
+            CreateMap<MenuItem, ResultMenuItemDto>().ReverseMap();
+            CreateMap<MenuItem, UpdateMenuItemDto>().ReverseMap();
+            CreateMap<MenuItem, DetailMenuItemDto>().ReverseMap();
+        }
+    }
+}

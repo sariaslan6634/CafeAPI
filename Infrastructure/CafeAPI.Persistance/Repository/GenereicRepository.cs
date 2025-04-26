@@ -30,7 +30,7 @@ namespace CafeAPI.Persistance.Repository
             await _context.SaveChangesAsync();
         }
 
-        public async Task<List<T>> GetAllAsync(int id)
+        public async Task<List<T>> GetAllAsync()
         {
             var result = await _context.Set<T>().ToListAsync();
             return result;
