@@ -9,11 +9,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace CafeAPI.Persistance.Repository
 {
-    public class GenereicRepository<T> : IGenericRepository<T> where T:class
+    public class GenericRepository<T> : IGenericRepository<T> where T:class
     {
         private readonly AppDbContext _context;
 
-        public GenereicRepository(AppDbContext context)
+        public GenericRepository(AppDbContext context)
         {
             _context = context;
         }
