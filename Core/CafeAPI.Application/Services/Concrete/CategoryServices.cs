@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using CafeAPI.Application.Dtos.CategoryDto;
+using CafeAPI.Application.Dtos.ResponseDto;
 using CafeAPI.Application.Interfaces;
 using CafeAPI.Application.Services.Abstract;
 using CafeAPI.Domain.Entities;
@@ -34,11 +35,27 @@ namespace CafeAPI.Application.Services.Concrete
             await _categoryRepository.DeleteAsync(category);
         }
 
-        public async Task<List<ResultCategoryDto>> GetAllCategories()
+        public async Task<ResponseDto<List<ResultCategoryDto>>> GetAllCategories()
         {
-            var categories = await _categoryRepository.GetAllAsync();
-            var result = _mapper.Map<List<ResultCategoryDto>>(categories);  
-            return result;
+            try
+            {
+                var categories = await _categoryRepository.GetAllAsync();
+                if (categories.Count == 0)
+                {
+                    return new ResponseDto<List<ResultCategoryDto>> { Success = false, Message = "Kategori bulunamadı", ErrorCodes = ErrorCodes.NotFound };
+                }
+                var result = _mapper.Map<List<ResultCategoryDto>>(categories);
+                return new ResponseDto<List<ResultCategoryDto>> { Success = true, Data = result };
+
+            }
+            catch (Exception ex)
+            {
+                return new ResponseDto<List<ResultCategoryDto>>{
+                    Success = false,
+                    Message = ex.Message,
+                    ErrorCodes = ErrorCodes.Exception };
+            }
+           
         }
 
         public async Task<DetailCategoryDto> GetByIdCategory(int id)

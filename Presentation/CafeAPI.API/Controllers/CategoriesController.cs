@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using CafeAPI.Application.Dtos.CategoryDto;
+using CafeAPI.Application.Dtos.ResponseDto;
 using CafeAPI.Application.Services.Abstract;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -20,6 +21,14 @@ namespace CafeAPI.API.Controllers
         public async Task<IActionResult> GetAllCategories()
         {
             var result = await _categoryServices.GetAllCategories();
+            if (!result.Success)
+            {
+                if (result.ErrorCodes == ErrorCodes.NotFound)
+                {
+                    return Ok(result);
+                }
+                return BadRequest(result);
+            }
             return Ok(result);
         }
         [HttpGet("{id}")]
