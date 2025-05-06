@@ -1,3 +1,4 @@
+using CafeAPI.Application.Dtos.CategoryDto;
 using CafeAPI.Application.Interfaces;
 using CafeAPI.Application.Mapping;
 using CafeAPI.Application.Services.Abstract;
@@ -5,7 +6,9 @@ using CafeAPI.Application.Services.Concrete;
 using CafeAPI.Persistance.Context;
 using CafeAPI.Persistance.Repository;
 using Microsoft.EntityFrameworkCore;
+using CafeAPI.Application.Validations;
 using Scalar.AspNetCore;
+using FluentValidation;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +27,8 @@ builder.Services.AddScoped<ICategoryServices, CategoryServices>();
 
 builder.Services.AddAutoMapper(typeof(GeneralMapping));
 
+builder.Services.AddValidatorsFromAssemblyContaining<CreateCategoryDto>();
+builder.Services.AddValidatorsFromAssemblyContaining<UpdateCategoryDto>();
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();

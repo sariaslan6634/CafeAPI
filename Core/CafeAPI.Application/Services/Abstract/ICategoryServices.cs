@@ -11,9 +11,9 @@ namespace CafeAPI.Application.Services.Abstract
     public interface ICategoryServices
     {
         Task<ResponseDto<List<ResultCategoryDto>>> GetAllCategories();
-        Task<DetailCategoryDto> GetByIdCategory(int id);
-        Task AddCategory(CreateCategoryDto dto);
-        Task UpdateCategory(UpdateCategoryDto dto);
-        Task DeleteCategory(int id);
+        Task<ResponseDto<DetailCategoryDto>> GetByIdCategory(int id);
+        Task <ResponseDto<object>> AddCategory(CreateCategoryDto dto);
+        Task <ResponseDto<object>> UpdateCategory(UpdateCategoryDto dto);
+        Task<ResponseDto<object>> DeleteCategory(int id);
     }
 }

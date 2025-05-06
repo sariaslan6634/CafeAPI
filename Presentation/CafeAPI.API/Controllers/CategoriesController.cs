@@ -35,31 +35,55 @@ namespace CafeAPI.API.Controllers
         public async Task<IActionResult> GetbyIdCategory(int id)
         {
             var result = await _categoryServices.GetByIdCategory(id);
+            if (!result.Success)
+            {
+                if (result.ErrorCodes == ErrorCodes.NotFound)
+                    return Ok(result);
+                return BadRequest(result);
+            }
             return Ok(result);
         }
         [HttpPost]
         public async Task<IActionResult> AddCategory(CreateCategoryDto dto)
         {
-            await _categoryServices.AddCategory(dto);
-            return Ok("Kategori oluşturuldu!");
+            var result = await _categoryServices.AddCategory(dto);
+            if(!result.Success)
+                if (result.ErrorCodes == ErrorCodes.ValidationError)
+                {
+                    return Ok(result);
+                }
+                return BadRequest(result);
+            return Ok(result);
         }
         [HttpPut]
         public async Task<IActionResult> UpdateCategory(UpdateCategoryDto dto)
         {
-            await _categoryServices.UpdateCategory(dto);
-            return Ok("Kategori Guncellendi!");
+            var result = await _categoryServices.UpdateCategory(dto);
+            if(!result.Success)
+            {
+                if (result.ErrorCodes is ErrorCodes.ValidationError or ErrorCodes.NotFound)
+                {
+                    return Ok(result);
+                }
+                if(result.ErrorCodes == ErrorCodes.NotFound)
+                {                    
+                    return Ok(result);
+                }           
+                return BadRequest(result);
+            }
+            return Ok(result);
         }
         [HttpDelete]
         public async Task<IActionResult> DeleteCategory(int id)
         {
-            await _categoryServices.DeleteCategory(id);
-            return Ok("Kategori Silindi!");
+            var result = await _categoryServices.DeleteCategory(id);
+            if (!result.Success)
+            {
+                if(result.ErrorCodes == ErrorCodes.NotFound)
+                    return Ok(result);
+                return BadRequest(result);
+            }
+            return Ok(result);
         }
-
-
-
-
-
-
     }
 }

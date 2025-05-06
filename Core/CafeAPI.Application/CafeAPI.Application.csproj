@@ -8,10 +8,15 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="14.0.0" />
+    <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\CafeAPI.Domain\CafeAPI.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Validations\NewFolder\" />
   </ItemGroup>
 
 </Project>
