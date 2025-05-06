@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using CafeAPI.Application.Validations;
 using Scalar.AspNetCore;
 using FluentValidation;
+using CafeAPI.Application.Dtos.MenuItemDto;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,8 +28,12 @@ builder.Services.AddScoped<ICategoryServices, CategoryServices>();
 
 builder.Services.AddAutoMapper(typeof(GeneralMapping));
 
+//Validator
 builder.Services.AddValidatorsFromAssemblyContaining<CreateCategoryDto>();
 builder.Services.AddValidatorsFromAssemblyContaining<UpdateCategoryDto>();
+builder.Services.AddValidatorsFromAssemblyContaining<CreateMenuItemDto>();
+builder.Services.AddValidatorsFromAssemblyContaining<UpdateMenuItemDto>();
+
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();

@@ -4,15 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using CafeAPI.Application.Dtos.MenuItemDto;
+using CafeAPI.Application.Dtos.ResponseDto;
 
 namespace CafeAPI.Application.Services.Abstract
 {
     public interface IMenuItemServices
     {
-        Task<List<ResultMenuItemDto>> GetAllMenuItems();
-        Task<DetailMenuItemDto> GetByIdMenuItem(int id);
-        Task AddManuItem(CreateMenuItemDto dto);
-        Task UpdateManuItem(UpdateMenuItemDto dto);
-        Task DeleteManuItem(int id);    
+        Task<ResponseDto<List<ResultMenuItemDto>>> GetAllMenuItems();
+        Task<ResponseDto<DetailMenuItemDto>> GetByIdMenuItem(int id);
+        Task<ResponseDto<object>> AddManuItem(CreateMenuItemDto dto);
+        Task<ResponseDto<object>> UpdateManuItem(UpdateMenuItemDto dto);
+        Task<ResponseDto<object>> DeleteManuItem(int id);    
     }
 }

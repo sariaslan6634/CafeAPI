@@ -15,8 +15,4 @@
     <ProjectReference Include="..\CafeAPI.Domain\CafeAPI.Domain.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Validations\NewFolder\" />
-  </ItemGroup>
-
 </Project>
