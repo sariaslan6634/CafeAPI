@@ -12,5 +12,6 @@ namespace CafeAPI.Application.Dtos.ResponseDto
         public const string Unauthorized = "UNAUTHORIZED";
         public const string Exception = "EXCEPTION";
         public const string ValidationError = "VALIDATION_ERROR";
+        public const string DuplicateError = "DUPLICATEERROR";
     }
 }

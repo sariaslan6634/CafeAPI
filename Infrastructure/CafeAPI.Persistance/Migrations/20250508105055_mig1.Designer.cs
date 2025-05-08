@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CafeAPI.Persistance.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250429152505_mig1")]
+    [Migration("20250508105055_mig1")]
     partial class mig1
     {
         /// <inheritdoc />
@@ -75,6 +75,28 @@ namespace CafeAPI.Persistance.Migrations
                     b.HasIndex("CategoryId");
 
                     b.ToTable("MenuItems");
+                });
+
+            modelBuilder.Entity("CafeAPI.Domain.Entities.Table", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("Capacity")
+                        .HasColumnType("int");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("TableNumber")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Tables");
                 });
 
             modelBuilder.Entity("CafeAPI.Domain.Entities.MenuItem", b =>
