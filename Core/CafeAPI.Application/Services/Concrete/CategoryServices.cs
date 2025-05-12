@@ -40,7 +40,7 @@ namespace CafeAPI.Application.Services.Concrete
                         Success = false,
                         Data = null,
                         Message = string.Join(" | ",validate.Errors.Select(x=>x.ErrorMessage)),
-                        ErrorCodes = ErrorCodes.ValidationError
+                        ErrorCode = ErrorCodes.ValidationError
                     };
                 }
                 var category = _mapper.Map<Category>(dto);
@@ -49,7 +49,7 @@ namespace CafeAPI.Application.Services.Concrete
             }
             catch (Exception ex)
             {
-                return new ResponseDto<object> {Success = false,Data = null,Message = "Bir hata oluştu!",ErrorCodes = ErrorCodes.Exception};
+                return new ResponseDto<object> {Success = false,Data = null,Message = "Bir hata oluştu!",ErrorCode = ErrorCodes.Exception};
 
             }
         }
@@ -61,14 +61,14 @@ namespace CafeAPI.Application.Services.Concrete
                 var category = await _categoryRepository.GetByIdAsync(id);
                 if (category == null)
                 {
-                    return new ResponseDto<object> { Success = false, Data = null, Message = "Kategori bulunamadı", ErrorCodes = ErrorCodes.NotFound };
+                    return new ResponseDto<object> { Success = false, Data = null, Message = "Kategori bulunamadı", ErrorCode = ErrorCodes.NotFound };
                 }
                 await _categoryRepository.DeleteAsync(category);
                 return new ResponseDto<object>{Success = true,Data = null,Message = "Kategori Silindi"};
             }
             catch (Exception ex)
             {
-                return new ResponseDto<object> { Success = false, Data = null, Message = "Bir hata oluştu.", ErrorCodes = ErrorCodes.Exception };                
+                return new ResponseDto<object> { Success = false, Data = null, Message = "Bir hata oluştu.", ErrorCode = ErrorCodes.Exception };                
             }
             
         }
@@ -80,7 +80,7 @@ namespace CafeAPI.Application.Services.Concrete
                 var categories = await _categoryRepository.GetAllAsync();
                 if (categories.Count == 0)
                 {
-                    return new ResponseDto<List<ResultCategoryDto>> { Success = false, Message = "Kategori bulunamadı", ErrorCodes = ErrorCodes.NotFound };
+                    return new ResponseDto<List<ResultCategoryDto>> { Success = false, Message = "Kategori bulunamadı", ErrorCode = ErrorCodes.NotFound };
                 }
                 var result = _mapper.Map<List<ResultCategoryDto>>(categories);
                 return new ResponseDto<List<ResultCategoryDto>> { Success = true, Data = result };
@@ -91,7 +91,7 @@ namespace CafeAPI.Application.Services.Concrete
                 return new ResponseDto<List<ResultCategoryDto>>{
                     Success = false,
                     Message = ex.Message,
-                    ErrorCodes = ErrorCodes.Exception };
+                    ErrorCode = ErrorCodes.Exception };
             }
            
         }
@@ -103,14 +103,14 @@ namespace CafeAPI.Application.Services.Concrete
                 var category = await _categoryRepository.GetByIdAsync(id);
                 if (category == null)
                 {
-                    return new ResponseDto<DetailCategoryDto> { Success = false,Message = "Kategori bulanamadı.",ErrorCodes = ErrorCodes.NotFound};
+                    return new ResponseDto<DetailCategoryDto> { Success = false,Message = "Kategori bulanamadı.",ErrorCode = ErrorCodes.NotFound};
                 }
                 var result = _mapper.Map<DetailCategoryDto>(category);
                 return new ResponseDto<DetailCategoryDto> { Success = true, Data = result }; 
             }
             catch (Exception ex)
             {
-                return new ResponseDto<DetailCategoryDto> { Success = false, Message = ex.Message, ErrorCodes = ErrorCodes.Exception };
+                return new ResponseDto<DetailCategoryDto> { Success = false, Message = ex.Message, ErrorCode = ErrorCodes.Exception };
             }
         }
 
@@ -125,13 +125,13 @@ namespace CafeAPI.Application.Services.Concrete
                         Success = false,
                         Data = null,
                         Message = string.Join(" | ", validate.Errors.Select(x => x.ErrorMessage)),
-                        ErrorCodes = ErrorCodes.ValidationError
+                        ErrorCode = ErrorCodes.ValidationError
                     };
                 }
                 var categorydb = await _categoryRepository.GetByIdAsync(dto.Id);
                 if(categorydb == null)
                 {
-                    return new ResponseDto<object> {Success = false, Message = "Kategori bulunamadı.",ErrorCodes = ErrorCodes.NotFound};
+                    return new ResponseDto<object> {Success = false, Message = "Kategori bulunamadı.",ErrorCode = ErrorCodes.NotFound};
                 }
                 var category = _mapper.Map(dto,categorydb);
                 await _categoryRepository.UpdateAsync(category);
@@ -139,7 +139,7 @@ namespace CafeAPI.Application.Services.Concrete
             }
             catch (Exception ex) 
             {
-                return new ResponseDto<object> {Success = false,Data = null,Message = "Bir hata oluştu", ErrorCodes = ErrorCodes.Exception};
+                return new ResponseDto<object> {Success = false,Data = null,Message = "Bir hata oluştu", ErrorCode = ErrorCodes.Exception};
             }
         }
     }

@@ -13,5 +13,7 @@ namespace CafeAPI.Application.Dtos.ResponseDto
         public const string Exception = "EXCEPTION";
         public const string ValidationError = "VALIDATION_ERROR";
         public const string DuplicateError = "DUPLICATEERROR";
+        public const string Forbidden = "FORBIDDEN"; //Yetkilisin ama erişim yasak
+        public const string BadRequest = "BAD_REQUEST"; 
     }
 }

@@ -43,7 +43,7 @@ namespace CafeAPI.Application.Services.Concrete
                         Success = false,
                         Data = null,
                         Message = string.Join(" | ",validator.Errors.Select(x=>x.ErrorMessage)),
-                        ErrorCodes = ErrorCodes.ValidationError
+                        ErrorCode = ErrorCodes.ValidationError
                     };
                 }
                 var checkTable = await _tableRepository1.GetByTableNumberAsync(dto.TableNumber);
@@ -54,7 +54,7 @@ namespace CafeAPI.Application.Services.Concrete
                         Success = false,
                         Data = null,
                         Message = "Eklemek istediğiniz masa numarası mevcuttur.",
-                        ErrorCodes = ErrorCodes.DuplicateError
+                        ErrorCode = ErrorCodes.DuplicateError
                     };
                 }
                 var result = _mapper.Map<Table>(dto);
@@ -73,7 +73,7 @@ namespace CafeAPI.Application.Services.Concrete
                     Success = false,
                     Data = null,
                     Message = "Bir hata oluştu.",
-                    ErrorCodes = ErrorCodes.Exception
+                    ErrorCode = ErrorCodes.Exception
                 };
             }
         }
@@ -90,7 +90,7 @@ namespace CafeAPI.Application.Services.Concrete
                         Success = false,
                         Data = null,
                         Message = "Aradığınız masa bulunamadı",
-                        ErrorCodes = ErrorCodes.NotFound
+                        ErrorCode = ErrorCodes.NotFound
                     };
                 }
                 await _tableRepository.DeleteAsync(repository);
@@ -108,7 +108,7 @@ namespace CafeAPI.Application.Services.Concrete
                     Success = false,
                     Data = null,
                     Message = "Bir hata oluştu.",
-                    ErrorCodes = ErrorCodes.Exception
+                    ErrorCode = ErrorCodes.Exception
                 };
             }
         }
@@ -125,7 +125,7 @@ namespace CafeAPI.Application.Services.Concrete
                         Success = false,
                         Data = null,
                         Message = "Aktif masa yok",
-                        ErrorCodes = ErrorCodes.NotFound
+                        ErrorCode = ErrorCodes.NotFound
                     };
                 }
                 var result = _mapper.Map<List<ResultTableDto>>(repository);
@@ -142,7 +142,7 @@ namespace CafeAPI.Application.Services.Concrete
                     Success = false,
                     Data = null,
                     Message = "Bir hata oluştu",
-                    ErrorCodes = ErrorCodes.Exception
+                    ErrorCode = ErrorCodes.Exception
                 };
             }
         }
@@ -160,7 +160,7 @@ namespace CafeAPI.Application.Services.Concrete
                         Success = false,
                         Data = null,
                         Message = "Aktif masa yok",
-                        ErrorCodes = ErrorCodes.NotFound
+                        ErrorCode = ErrorCodes.NotFound
                     };
                 }
                 var result = _mapper.Map<List<ResultTableDto>>(repository);
@@ -177,7 +177,7 @@ namespace CafeAPI.Application.Services.Concrete
                     Success = false,
                     Data = null,
                     Message = "Bir hata oluştu",
-                    ErrorCodes = ErrorCodes.Exception
+                    ErrorCode = ErrorCodes.Exception
                 };
             }
         }
@@ -194,7 +194,7 @@ namespace CafeAPI.Application.Services.Concrete
                         Success = false,
                         Data = null,
                         Message = "Masalar bulunamadı.",
-                        ErrorCodes = ErrorCodes.NotFound
+                        ErrorCode = ErrorCodes.NotFound
                     };
                 }
                 var result = _mapper.Map<List<ResultTableDto>>(repository);
@@ -211,7 +211,7 @@ namespace CafeAPI.Application.Services.Concrete
                     Success = false,
                     Data = null,
                     Message = "Bir sorun oluştu.",
-                    ErrorCodes = ErrorCodes.Exception
+                    ErrorCode = ErrorCodes.Exception
                 };
 
             }
@@ -229,7 +229,7 @@ namespace CafeAPI.Application.Services.Concrete
                         Success = false,
                         Data = null,
                         Message ="Masa bulunamadı.",
-                        ErrorCodes = ErrorCodes.NotFound
+                        ErrorCode = ErrorCodes.NotFound
                     };
                 }
                 var result = _mapper.Map<DetailTableDto>(repository);
@@ -246,7 +246,7 @@ namespace CafeAPI.Application.Services.Concrete
                     Success = false,
                     Data = null,
                     Message = "Bir sorun oluştu.",
-                    ErrorCodes = ErrorCodes.Exception
+                    ErrorCode = ErrorCodes.Exception
                 };
             }
         }
@@ -263,7 +263,7 @@ namespace CafeAPI.Application.Services.Concrete
                         Success = false,
                         Data = null,
                         Message = "Masa bulunamadı.",
-                        ErrorCodes = ErrorCodes.NotFound
+                        ErrorCode = ErrorCodes.NotFound
                     };
                 }
                 var result = _mapper.Map<DetailTableDto>(table);
@@ -280,7 +280,7 @@ namespace CafeAPI.Application.Services.Concrete
                     Success = false,
                     Data = null,
                     Message ="Bir hata oluştu.",
-                    ErrorCodes= ErrorCodes.Exception
+                    ErrorCode = ErrorCodes.Exception
                 };
             }
         }
@@ -297,7 +297,7 @@ namespace CafeAPI.Application.Services.Concrete
                         Success = false,
                         Data = null,
                         Message = string.Join(" | ",validate.Errors.Select(x=>x.ErrorMessage)),
-                        ErrorCodes = ErrorCodes.ValidationError
+                        ErrorCode = ErrorCodes.ValidationError
                     };
                 }
 
@@ -310,7 +310,7 @@ namespace CafeAPI.Application.Services.Concrete
                         Success = false,
                         Data = null,
                         Message ="Masa bulunamadı.",
-                        ErrorCodes = ErrorCodes.NotFound
+                        ErrorCode = ErrorCodes.NotFound
                     };
                 }
                 var result = _mapper.Map(dto, repository);
@@ -329,7 +329,7 @@ namespace CafeAPI.Application.Services.Concrete
                     Success = false,
                     Data = null,
                     Message = "Bir hata oluştu.",
-                    ErrorCodes = ErrorCodes.Exception
+                    ErrorCode = ErrorCodes.Exception
                 };
             }
         }
@@ -346,7 +346,7 @@ namespace CafeAPI.Application.Services.Concrete
                         Success = false,
                         Data = null,
                         Message = "Masa bulunamadı.",
-                        ErrorCodes = ErrorCodes.NotFound
+                        ErrorCode = ErrorCodes.NotFound
                     };
                 }
                 repository.IsActive = !repository.IsActive;
@@ -365,7 +365,7 @@ namespace CafeAPI.Application.Services.Concrete
                     Success = false,
                     Data = null,
                     Message = "Bir hata oluştu.",
-                    ErrorCodes = ErrorCodes.Exception
+                    ErrorCode = ErrorCodes.Exception
                 };
             }
         }
@@ -382,7 +382,7 @@ namespace CafeAPI.Application.Services.Concrete
                         Success = false,
                         Data = null,
                         Message = "Masa bulunamadı.",
-                        ErrorCodes = ErrorCodes.NotFound
+                        ErrorCode = ErrorCodes.NotFound
                     };
                 }
                 repository.IsActive = !repository.IsActive;
@@ -401,7 +401,7 @@ namespace CafeAPI.Application.Services.Concrete
                     Success = false,
                     Data = null,
                     Message = "Bir hata oluştu.",
-                    ErrorCodes = ErrorCodes.Exception
+                    ErrorCode = ErrorCodes.Exception
                 };
             }
         }
