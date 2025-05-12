@@ -113,6 +113,75 @@ namespace CafeAPI.Application.Services.Concrete
             }
         }
 
+        public async Task<ResponseDto<List<ResultTableDto>>> GetAllActiveTables()
+        {
+            try
+            {
+                var repository = await _tableRepository1.GetAllActiveTablesAsync();
+                if (repository.Count == 0)
+                {
+                    return new ResponseDto<List<ResultTableDto>>
+                    {
+                        Success = false,
+                        Data = null,
+                        Message = "Aktif masa yok",
+                        ErrorCodes = ErrorCodes.NotFound
+                    };
+                }
+                var result = _mapper.Map<List<ResultTableDto>>(repository);
+                return new ResponseDto<List<ResultTableDto>>
+                {
+                    Success = true,
+                    Data = result,
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseDto<List<ResultTableDto>>
+                {
+                    Success = false,
+                    Data = null,
+                    Message = "Bir hata oluştu",
+                    ErrorCodes = ErrorCodes.Exception
+                };
+            }
+        }
+
+        public async Task<ResponseDto<List<ResultTableDto>>> GetAllActiveTablesGeneric()
+        {
+            try
+            {
+                var repository = await _tableRepository.GetAllAsync();
+                repository = repository.Where(x => x.IsActive == true).ToList();
+                if (repository.Count == 0)
+                {
+                    return new ResponseDto<List<ResultTableDto>>
+                    {
+                        Success = false,
+                        Data = null,
+                        Message = "Aktif masa yok",
+                        ErrorCodes = ErrorCodes.NotFound
+                    };
+                }
+                var result = _mapper.Map<List<ResultTableDto>>(repository);
+                return new ResponseDto<List<ResultTableDto>>
+                {
+                    Success = true,
+                    Data = result,
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseDto<List<ResultTableDto>>
+                {
+                    Success = false,
+                    Data = null,
+                    Message = "Bir hata oluştu",
+                    ErrorCodes = ErrorCodes.Exception
+                };
+            }
+        }
+
         public async Task<ResponseDto<List<ResultTableDto>>> GetAllTables()
         {
             try
@@ -250,6 +319,78 @@ namespace CafeAPI.Application.Services.Concrete
                 {
                     Success = true,
                     Data= result,
+                    Message = "Masa başarılı bir şekilde güncellendi."
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseDto<object>
+                {
+                    Success = false,
+                    Data = null,
+                    Message = "Bir hata oluştu.",
+                    ErrorCodes = ErrorCodes.Exception
+                };
+            }
+        }
+
+        public async Task<ResponseDto<object>> UpdateTableStatusById(int id)
+        {
+            try
+            {
+                var repository = await _tableRepository.GetByIdAsync(id);
+                if (repository == null)
+                {
+                    return new ResponseDto<object>
+                    {
+                        Success = false,
+                        Data = null,
+                        Message = "Masa bulunamadı.",
+                        ErrorCodes = ErrorCodes.NotFound
+                    };
+                }
+                repository.IsActive = !repository.IsActive;
+                await _tableRepository.UpdateAsync(repository);
+                return new ResponseDto<object>
+                {
+                    Success = true,
+                    Data = null,
+                    Message = "Masa başarılı bir şekilde güncellendi."
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseDto<object>
+                {
+                    Success = false,
+                    Data = null,
+                    Message = "Bir hata oluştu.",
+                    ErrorCodes = ErrorCodes.Exception
+                };
+            }
+        }
+
+        public async Task<ResponseDto<object>> UpdateTablStatusByTableNumber(int tableNumber)
+        {
+            try
+            {
+                var repository = await _tableRepository1.GetByTableNumberAsync(tableNumber);
+                if (repository == null)
+                {
+                    return new ResponseDto<object>
+                    {
+                        Success = false,
+                        Data = null,
+                        Message = "Masa bulunamadı.",
+                        ErrorCodes = ErrorCodes.NotFound
+                    };
+                }
+                repository.IsActive = !repository.IsActive;
+                await _tableRepository.UpdateAsync(repository);
+                return new ResponseDto<object>
+                {
+                    Success = true,
+                    Data = null,
                     Message = "Masa başarılı bir şekilde güncellendi."
                 };
             }
