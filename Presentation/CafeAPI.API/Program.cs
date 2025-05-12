@@ -12,6 +12,8 @@ using FluentValidation;
 using CafeAPI.Application.Dtos.MenuItemDto;
 using CafeAPI.Application.Dtos.TableDto;
 using FluentValidation.AspNetCore;
+using CafeAPI.Application.Dtos.OrderDto;
+using CafeAPI.Application.Dtos.OrderItemDto;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,16 +32,26 @@ builder.Services.AddScoped<ITableRepository, TableRepository>();
 builder.Services.AddScoped<IMenuItemServices, MenuItemServices>();
 builder.Services.AddScoped<ICategoryServices, CategoryServices>();
 builder.Services.AddScoped<ITableServices, TableServices>();
+builder.Services.AddScoped<IOrderServices, OrderServices>();
+builder.Services.AddScoped<IOrderItemServices, OrderItemServices>();
 
 builder.Services.AddAutoMapper(typeof(GeneralMapping));
 
 //Validator
 builder.Services.AddValidatorsFromAssemblyContaining<CreateCategoryDto>();
 builder.Services.AddValidatorsFromAssemblyContaining<UpdateCategoryDto>();
+
 builder.Services.AddValidatorsFromAssemblyContaining<CreateMenuItemDto>();
 builder.Services.AddValidatorsFromAssemblyContaining<UpdateMenuItemDto>();
+
 builder.Services.AddValidatorsFromAssemblyContaining<CreateTableDto>();
 builder.Services.AddValidatorsFromAssemblyContaining<UpdateTableDto>();
+
+builder.Services.AddValidatorsFromAssemblyContaining<CreateOrderDto>();
+builder.Services.AddValidatorsFromAssemblyContaining<UpdateOrderDto>();
+
+builder.Services.AddValidatorsFromAssemblyContaining<CreateOrderItemDto>();
+builder.Services.AddValidatorsFromAssemblyContaining<UpdateOrderItemDto>();
 
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
