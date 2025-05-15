@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using CafeAPI.Application.Dtos.OrderDto;
+using CafeAPI.Application.Services.Abstract;
 using CafeAPI.Application.Services.Concrete;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -10,8 +11,8 @@ namespace CafeAPI.API.Controllers
     [ApiController]
     public class OrdersController : BaseController
     {
-        private readonly OrderServices _orderServices;
-        public OrdersController(OrderServices orderServices)
+        private readonly IOrderServices _orderServices;
+        public OrdersController(IOrderServices orderServices)
         {
             _orderServices = orderServices;
         }
@@ -45,5 +46,36 @@ namespace CafeAPI.API.Controllers
             var result = await _orderServices.DeleteOrder(id);
             return CreateResponse(result);
         }
+        [HttpGet("GetAllOrderWithDetail")]
+        public async Task<IActionResult> GetAllOrderWithDetail()
+        {
+            var result = await _orderServices.GettAllOrdersWithDetail();
+            return CreateResponse(result);
+
+        }
+        [HttpPut("UpdateOrderStatusHazir")]
+        public async Task<IActionResult> UpdateOrderStatusHazir(int id)
+        {
+            var result = await _orderServices.UpdateOrderStatusHazir(id);
+            return CreateResponse(result);
+        }
+        [HttpPut("UpdateOrderStatusIptalEdildi")]
+        public async Task<IActionResult> UpdateOrderStatusIptalEdildi(int id)
+        {
+            var result = await _orderServices.UpdateOrderStatusIptalEdildi(id);
+            return CreateResponse(result);
+        }
+        [HttpPut("UpdateOrderStatusTeslimEdildi")]
+        public async Task<IActionResult> UpdateOrderStatusTeslimEdildi(int id)
+        {
+            var result = await _orderServices.UpdateOrderStatusTeslimEdildi(id);
+            return CreateResponse(result);
+        }
+        //[HttpPut("AddOrderItemByOrder")]
+        //public async Task<IActionResult> AddOrderItemByOrder(AddOrderItemByOrderDto dto)
+        //{
+        //    var result = await _orderServices.AddOrderItemByOrderId(dto);
+        //    return CreateResponse(result);
+        //}
     }
 }

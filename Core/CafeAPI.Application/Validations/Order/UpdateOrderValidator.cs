@@ -12,9 +12,9 @@ namespace CafeAPI.Application.Validations.Order
     {
         public UpdateOrderValidator()
         {
-            RuleFor(x => x.TotalPrice)
-                    .NotEmpty().WithMessage("Toplam fiyat boş olamaz")
-                    .GreaterThan(0).WithMessage("Sipariş ücreti 0'dan büyük olmalıdır.");
+        //    RuleFor(x => x.TotalPrice)
+        //            .NotEmpty().WithMessage("Toplam fiyat boş olamaz")
+        //            .GreaterThan(0).WithMessage("Sipariş ücreti 0'dan büyük olmalıdır.");
         }
     }
 }

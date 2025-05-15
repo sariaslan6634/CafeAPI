@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using CafeAPI.Application.Dtos.OrderDto;
 using CafeAPI.Application.Dtos.OrderItemDto;
+using CafeAPI.Application.Services.Abstract;
 using CafeAPI.Application.Services.Concrete;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -11,9 +12,9 @@ namespace CafeAPI.API.Controllers
     [ApiController]
     public class OrderItemsController : BaseController
     {
-        private readonly OrderItemServices _orderItemServices;
+        private readonly IOrderItemServices _orderItemServices;
 
-        public OrderItemsController(OrderItemServices orderItemServices)
+        public OrderItemsController(IOrderItemServices orderItemServices)
         {
             _orderItemServices = orderItemServices;
         }
