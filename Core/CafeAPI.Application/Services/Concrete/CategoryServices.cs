@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using CafeAPI.Application.Dtos.CategoryDto;
+using CafeAPI.Application.Dtos.MenuItemDto;
 using CafeAPI.Application.Dtos.ResponseDto;
 using CafeAPI.Application.Interfaces;
 using CafeAPI.Application.Services.Abstract;
@@ -15,17 +16,19 @@ namespace CafeAPI.Application.Services.Concrete
 {
     public class CategoryServices : ICategoryServices
     {
+        private readonly IGenericRepository<Category> _categoryRepository;
+        private readonly IMenuItemRepository _menuItemRepository;
         private readonly IValidator<CreateCategoryDto> _createCategoryValidator;
         private readonly IValidator<UpdateCategoryDto> _updateCategoryValidator;
-        private readonly IGenericRepository<Category> _categoryRepository;
         private readonly IMapper _mapper;
 
-        public CategoryServices(IGenericRepository<Category> categoryRepository, IMapper mapper, IValidator<CreateCategoryDto> createCategoryValidator, IValidator<UpdateCategoryDto> updateCategoryValidator)
+        public CategoryServices(IGenericRepository<Category> categoryRepository, IMapper mapper, IValidator<CreateCategoryDto> createCategoryValidator, IValidator<UpdateCategoryDto> updateCategoryValidator, IMenuItemRepository menuItemRepository)
         {
             _categoryRepository = categoryRepository;
             _mapper = mapper;
             _createCategoryValidator = createCategoryValidator;
             _updateCategoryValidator = updateCategoryValidator;
+            _menuItemRepository = menuItemRepository;
         }
 
         public async Task<ResponseDto<object>> AddCategory(CreateCategoryDto dto)
@@ -90,7 +93,7 @@ namespace CafeAPI.Application.Services.Concrete
             {
                 return new ResponseDto<List<ResultCategoryDto>>{
                     Success = false,
-                    Message = ex.Message,
+                    Message = "Bir hata oluştu.",
                     ErrorCode = ErrorCodes.Exception };
             }
            
@@ -105,12 +108,49 @@ namespace CafeAPI.Application.Services.Concrete
                 {
                     return new ResponseDto<DetailCategoryDto> { Success = false,Message = "Kategori bulanamadı.",ErrorCode = ErrorCodes.NotFound};
                 }
+                var menuItems = await _menuItemRepository.GetMenuItemFilterByCategoryId(id);
                 var result = _mapper.Map<DetailCategoryDto>(category);
+                var newList = _mapper.Map<List<CategoriesMenuItemDto>>(menuItems);
+                result.MenuItems = newList;
                 return new ResponseDto<DetailCategoryDto> { Success = true, Data = result }; 
             }
             catch (Exception ex)
             {
-                return new ResponseDto<DetailCategoryDto> { Success = false, Message = ex.Message, ErrorCode = ErrorCodes.Exception };
+                return new ResponseDto<DetailCategoryDto> { Success = false, Message ="Bir hata oluştu", ErrorCode = ErrorCodes.Exception };
+            }
+        }
+
+        public async Task<ResponseDto<List<ResultCategoriesWithMenuDto>>> GetCategoriesWithMenuItem()
+        {
+            try
+            {
+                var categories = await _categoryRepository.GetAllAsync();
+                if (categories.Count == 0)
+                {
+                    return new ResponseDto<List<ResultCategoriesWithMenuDto>>
+                    {
+                        Success = false,
+                        Message = "Kategori Bulunamadı.",
+                        ErrorCode = ErrorCodes.NotFound
+                    };
+                }
+                var result = _mapper.Map<List<ResultCategoriesWithMenuDto>>(categories);
+                foreach (var item in result)
+                {
+                    var listMenuItems = await _menuItemRepository.GetMenuItemFilterByCategoryId(item.Id);
+                    var newList = _mapper.Map<List<CategoriesMenuItemDto>>(listMenuItems);
+                    item.MenuItems = newList;
+                }
+                return new ResponseDto<List<ResultCategoriesWithMenuDto>>
+                {
+                    Success = true,
+                    Data = result
+                };
+            }
+            catch (Exception ex)
+            {
+                return new ResponseDto<List<ResultCategoriesWithMenuDto>>
+                { Success = false, Message = "Bir hata oluştu", ErrorCode = ErrorCodes.Exception };
             }
         }
 
